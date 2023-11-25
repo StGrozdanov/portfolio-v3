@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for existing cache
-        id: cache
+        id: existing-cache
         run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
         continue-on-error: true
 
@@ -86,7 +86,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for existing cache
-        id: cache
+        id: existing-cache
         run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
         continue-on-error: true
 
@@ -129,7 +129,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for existing cache
-        id: cache
+        id: existing-cache
         run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
         continue-on-error: true
 
