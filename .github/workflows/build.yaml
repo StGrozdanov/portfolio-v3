@@ -58,7 +58,7 @@ jobs:
         run: npm rebuild && npm run prepare --if-present
 
   typecheck_app:
-    name: Typecheck App
+    name: Typechecking
     needs: [install_app]
     runs-on: ubuntu-latest
     defaults:
@@ -94,7 +94,7 @@ jobs:
       #   run: npm run type-check:tests
 
   lint_app:
-    name: App
+    name: Linters
     needs: [install_app]
     runs-on: ubuntu-latest
     defaults:
