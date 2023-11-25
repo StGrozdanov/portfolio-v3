@@ -26,11 +26,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Check for existing cache
-        id: existing-cache
-        run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
-        continue-on-error: true
-
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -39,7 +34,7 @@ jobs:
           cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
       
       - name: Load dependencies
-        if: steps.cache.outputs.exists == 'true'
+        if: steps.existing-cache.outputs.exists == 'true'
         uses: actions/cache@v3
         with:
           path: ${{ env.PATH_PREFIX }}/node_modules
@@ -97,7 +92,7 @@ jobs:
           cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
       
       - name: Load dependencies
-        if: steps.cache.outputs.exists == 'true'
+        if: steps.existing-cache.outputs.exists == 'true'
         uses: actions/cache@v3
         with:
           path: ${{ env.PATH_PREFIX }}/node_modules
@@ -140,7 +135,7 @@ jobs:
           cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
       
       - name: Load dependencies
-        if: steps.cache.outputs.exists == 'true'
+        if: steps.existing-cache.outputs.exists == 'true'
         uses: actions/cache@v3
         with:
           path: ${{ env.PATH_PREFIX }}/node_modules
