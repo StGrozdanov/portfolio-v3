@@ -6,7 +6,7 @@
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:@next/next/recommended",
-      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended"
     ],
     "env": {
       "es6": true,

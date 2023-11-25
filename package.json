@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ./src --ext ts --ext tsx --ext js",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
     "type-check": "tsc --pretty --noEmit",
-    "type-check:tests": "tsc --pretty --noEmit --project test/tsconfig.json"
+    "type-check:tests": "tsc --pretty --noEmit --project test/tsconfig.json",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
@@ -18,7 +19,6 @@
     "*.{ts,js,json,md}": "prettier --write"
   },
   "dependencies": {
-    "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
     "next": "14.0.3",
     "react": "^18",
@@ -28,8 +28,10 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "husky": "^8.0.3",
     "sass": "^1.69.5",
     "typescript": "^5"
   }
