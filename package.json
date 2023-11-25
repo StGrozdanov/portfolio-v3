@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint": "eslint src --ext ts --ext tsx --ext js",
     "type-check": "tsc --pretty --noEmit",
     "type-check:tests": "tsc --pretty --noEmit --project test/tsconfig.json",
     "prepare": "husky install"
@@ -15,8 +15,7 @@
     "*.@(ts|tsx)": [
       "npm run lint"
     ],
-    "*.{js}": "eslint --cache --fix",
-    "*.{ts,js,json,md}": "prettier --write"
+    "*.{js}": "eslint --cache --fix"
   },
   "dependencies": {
     "lint-staged": "^15.1.0",
