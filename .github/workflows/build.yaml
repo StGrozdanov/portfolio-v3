@@ -28,9 +28,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for existing cache
-          id: cache
-          run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
-          continue-on-error: true
+        id: cache
+        run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
+        continue-on-error: true
 
       - name: Setup node
         uses: actions/setup-node@v3
