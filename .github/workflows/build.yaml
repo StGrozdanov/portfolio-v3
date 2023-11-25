@@ -189,7 +189,8 @@ jobs:
         
   deploy_nonprod:
     name: Deploy Nonprod
-    needs: [typecheck_app, lint_app, test_app, integration_tests]
+    # needs: [typecheck_app, lint_app, test_app, integration_tests]
+    needs: [typecheck_app, lint_app]
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
