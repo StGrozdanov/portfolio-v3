@@ -236,12 +236,18 @@ jobs:
       CACHE_PREFIX: ${{ inputs.working-directory && format('{0}-', inputs.working-directory) || '' }}
     steps:
       - uses: actions/checkout@v3
+      - name: Restore variables
+        uses: UnlyEd/github-action-store-variable@v2.1.1 # See https://github.com/UnlyEd/github-action-store-variable
+        with:
+          failIfNotFound: true
+          variables: |
+            VERCEL_DEPLOYMENT_URL
       - name: Install dependencies
         run: npm ci && npx playwright install --with-deps
       - name: Run tests
-        run: npx playwright playwright test tests/e2e
+        run: npx playwright test tests/e2e
         env:
-          BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          BASE_URL: ${{ env.VERCEL_DEPLOYMENT_URL }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
