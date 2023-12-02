@@ -4,7 +4,7 @@ import Animate from '../Animate/Animate';
 import Script from 'next/script';
 
 export default async function Footer() {
-    let socials: SocialMedia | undefined = undefined;
+    let socials: SocialMedia | null = null;
     const response = await fetch(`${process.env.BASE_API_URL}/get-socials`);
     if (response.ok) socials = await response.json();
     return (

@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
-import db from '../../../database/database';
 import log from '../../../utils/logger';
-
-interface QueryResponse {
-    socialMedia: SocialMedia
-}
+import { dbQuery } from '../../../database/database';
 
 export interface SocialMedia {
     facebook: string,
@@ -19,12 +15,18 @@ export interface SocialMedia {
  */
 export async function GET() {
     try {
-        const socialMedias: QueryResponse[] = await db.query(
-            `SELECT social_media AS socialMedia FROM users WHERE users.id = 1`
+        const { response, isEmpty } = await dbQuery(
+            `SELECT social_media AS socialMedia 
+             FROM users 
+             WHERE users.id = :user_id`,
+            { user_id: 1 }
         );
-        return NextResponse.json(socialMedias.length > 0 ? socialMedias[0].socialMedia : {}, { status: 200 })
+
+        const result: [] | SocialMedia = isEmpty ? response : response[0].socialmedia;
+
+        return NextResponse.json(result, { status: 200 })
     } catch (err) {
         log.error(err)
-        return NextResponse.json(undefined, { status: 500 });
+        return NextResponse.json({ status: 500 });
     }
 }

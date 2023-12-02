@@ -84,16 +84,7 @@
           "*.cts"
         ],
         "rules": {
-          "@typescript-eslint/explicit-function-return-type": 2,
           "require-jsdoc": 2
-        }
-      },
-      {
-        "files": [
-          "route.ts"
-        ],
-        "rules": {
-          "@typescript-eslint/explicit-function-return-type": 0
         }
       }
     ]

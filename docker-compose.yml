@@ -1,20 +1,21 @@
 version: '3.8'
 services:
-  mariadb:
-    container_name: mariadb
-    image: mariadb
+  postgres:
+    container_name: postgres
+    image: postgres
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=portfolio
-    ports:
-      - '3306:3306'
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: portfolio
+    ports: 
+      - 5432:5432
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
       - ./sql-init.sql:/docker-entrypoint-initdb.d/sql-init.sql
     networks:
       - default
 networks:
   default:
 volumes:
-  mariadb_data:
+  postgres_data:
