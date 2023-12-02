@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+require('dotenv').config();
+
 test('Footer should fetch socials data, open email send dialogue, and redirect on link click', async ({ page }) => {
     await page.goto(process.env.BASE_URL || '');
 
