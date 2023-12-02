@@ -227,7 +227,7 @@ jobs:
 
   e2e_test_app:
     name: e2e tests
-    needs: [prepare_e2e_test_env]
+    needs: [deploy_nonprod]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -243,7 +243,7 @@ jobs:
       - name: Run tests
         run: npx playwright test tests/e2e
         env:
-          BASE_URL: ${{ needs.prepare_e2e_test_env.outputs.preview_url }}
+          BASE_URL: ${{ st-grozdanov-non-prod.vercel.app }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -253,7 +253,7 @@ jobs:
 
   deploy_prod:
     name: Deploy Prod
-    needs: [prepare_e2e_test_env, e2e_test_app]
+    needs: [e2e_test_app]
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
