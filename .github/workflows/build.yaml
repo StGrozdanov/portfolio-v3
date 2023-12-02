@@ -9,7 +9,7 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 env:
-  preview_url: st-grozdanov-preview.vercel.app
+  PREVIEW_URL: https://st-grozdanov-non-prod.vercel.app
 
 jobs:
   install_app:
@@ -245,7 +245,7 @@ jobs:
       - name: Run tests
         run: npx playwright test tests/e2e
         env:
-          BASE_URL: ${{ env.preview_url }}
+          BASE_URL: ${{ env.PREVIEW_URL }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
