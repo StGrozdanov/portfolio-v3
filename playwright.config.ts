@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const BASE_URL = process.env.BASE_URL || 'http://127.0.0.1:3000';
+
 export default defineConfig({
   projects: [
     {
@@ -15,9 +17,12 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
   ],
+  use: {
+    baseURL: BASE_URL,
+  },
   webServer: {
     command: 'npm run dev',
-    url: process.env.BASE_URL || 'http://127.0.0.1:3000',
+    url: BASE_URL,
     reuseExistingServer: !process.env.CI,
   },
 });
