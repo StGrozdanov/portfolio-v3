@@ -241,11 +241,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm ci && npx playwright install --with-deps
+        run: npm ci
+
       - name: Run tests
         run: npx playwright test tests/e2e
         env:
           BASE_URL: ${{ env.PREVIEW_URL }}
+          
       - uses: actions/upload-artifact@v3
         if: always()
         with:
