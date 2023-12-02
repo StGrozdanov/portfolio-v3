@@ -225,20 +225,6 @@ jobs:
           url="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$url" st-grozdanov-non-prod.vercel.app
 
-  prepare_e2e_test_env:
-    name: prepare e2e tests
-    needs: [deploy_nonprod]
-    runs-on: ubuntu-latest
-    outputs:
-      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
-    steps:
-      - name: Waiting for 200 from the Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0 # <https://github.com/patrickedqvist/wait-for-vercel-preview>
-        id: waitForDeploy
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 700
-
   e2e_test_app:
     name: e2e tests
     needs: [prepare_e2e_test_env]
@@ -264,7 +250,6 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/
           retention-days: 10
-
 
   deploy_prod:
     name: Deploy Prod
