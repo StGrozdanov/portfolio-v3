@@ -263,6 +263,7 @@ jobs:
           path: e2e/playwright-report/
           retention-days: 10
 
+
   deploy_prod:
     name: Deploy Prod
     needs: [prepare_e2e_test_env, e2e_test_app]
