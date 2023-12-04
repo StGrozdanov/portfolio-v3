@@ -9,21 +9,19 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 env:
-  PREVIEW_URL: https://st-grozdanov-non-prod.vercel.app
+  PREVIEW_URL: ${{ secrets.PREVIEW_URL }}
+  PATH_PREFIX: ${{ github.workspace }}
+  CACHE_PREFIX: ""
 
 jobs:
   install_app:
-    name: App / install
+    name: Install
     runs-on: ubuntu-latest
     env:
-      PATH_PREFIX: ${{ github.workspace }}
-      CACHE_PREFIX: ""
-
     outputs:
-      cache-path: ${{ steps.cache.outputs.path }}
-      cache-key: ${{ steps.cache.outputs.key }}
-      cache-restore: ${{ steps.cache.outputs.restore }}
-
+      cache-path: ${{ steps.app-cache.outputs.path }}
+      cache-key: ${{ steps.app-cache.outputs.key }}
+      cache-restore: ${{ steps.app-cache.outputs.restore }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -34,7 +32,7 @@ jobs:
           cache: "npm"
           cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
       - name: Set cache outputs
-        id: cache
+        id: app-cache
         run: |
           echo "path=${{ env.PATH_PREFIX }}/node_modules" >> $GITHUB_OUTPUT
           echo "key=${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}" >> $GITHUB_OUTPUT
@@ -43,9 +41,9 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.cache.outputs.path }}
-          key: ${{ steps.cache.outputs.key }}
-          restore-keys: ${{ steps.cache.outputs.restore }}
+          path: ${{ steps.app-cache.outputs.path }}
+          key: ${{ steps.app-cache.outputs.key }}
+          restore-keys: ${{ steps.app-cache.outputs.restore }}
       - name: Install dependencies (without scripts)
         id: install
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
@@ -61,9 +59,6 @@ jobs:
     defaults:
       run:
         working-directory: ${{ github.workspace }}
-    env:
-      PATH_PREFIX: ${{ github.workspace }}
-      CACHE_PREFIX: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -79,7 +74,6 @@ jobs:
           path: ${{ env.PATH_PREFIX }}/node_modules
           key: ${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}
       - name: Run type checks
-        id: type-check
         run: npm run type-check
 
   lint_app:
@@ -95,10 +89,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Check for existing cache
-        id: existing-cache
-        run: echo "::set-output name=exists::$(echo \"${{ runner.workspace }}/node_modules\")"
-        continue-on-error: true
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -109,7 +99,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.PATH_PREFIX }}/node_modules
-          key: ${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}
+          key: ${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}      
       - name: Run Linters
         run: npm run lint
 
@@ -120,9 +110,6 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.working-directory || github.workspace }}
-    env:
-      PATH_PREFIX: ${{ inputs.working-directory && format('{0}/{1}', github.workspace, inputs.working-directory) || github.workspace }}
-      CACHE_PREFIX: ${{ inputs.working-directory && format('{0}-', inputs.working-directory) || '' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -148,9 +135,6 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.working-directory || github.workspace }}
-    env:
-      PATH_PREFIX: ${{ inputs.working-directory && format('{0}/{1}', github.workspace, inputs.working-directory) || github.workspace }}
-      CACHE_PREFIX: ${{ inputs.working-directory && format('{0}-', inputs.working-directory) || '' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3      
@@ -164,15 +148,13 @@ jobs:
         with:
           node-version: 20.10.0
           cache: "npm"
-          cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json     
-      - name: Cache Playwright
+          cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
+      - name: Load dependencies
         id: playwright-cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.PATH_PREFIX }}/.cache/ms-playwright
-          key: ${{ format('{0}playwright-{1}', env.CACHE_PREFIX, hashFiles('e2e/package-lock.json')) }}
-      - name: Install dependencies
-        run: npm ci
+          path: ${{ env.PATH_PREFIX }}/node_modules
+          key: ${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}  
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
@@ -213,19 +195,21 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.working-directory || github.workspace }}
-    env:
-      PATH_PREFIX: ${{ inputs.working-directory && format('{0}/{1}', github.workspace, inputs.working-directory) || github.workspace }}
-      CACHE_PREFIX: ${{ inputs.working-directory && format('{0}-', inputs.working-directory) || '' }}
-    steps:
-      - name: Cache Playwright
+  steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3      
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+          cache: "npm"
+          cache-dependency-path: ${{ env.PATH_PREFIX }}/package-lock.json
+      - name: Load dependencies
         id: playwright-e2e-cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.PATH_PREFIX }}/.cache/ms-playwright
-          key: ${{ format('{0}playwright-{1}', env.CACHE_PREFIX, hashFiles('e2e/package-lock.json')) }}
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm ci
+          path: ${{ env.PATH_PREFIX }}/node_modules
+          key: ${{ format('{0}node_modules-{1}', env.CACHE_PREFIX, hashFiles(format('{0}/package-lock.json', env.PATH_PREFIX))) }}  
       - name: Install Playwright Browsers
         if: steps.playwright-e2e-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
