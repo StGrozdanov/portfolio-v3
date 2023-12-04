@@ -1,12 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Navigation from './Navigation';
+import { BurgerProvider } from '@/contexts/BurgerContext';
 
 describe('Navigation burger menu should close, open and scroll to element as expected', () => {
   let navMenu: HTMLElement;
   let hamburgerIcon: HTMLElement;
 
   beforeEach(() => {
-    render(<Navigation />);
+    render(
+      <BurgerProvider>
+        <Navigation />
+      </BurgerProvider>
+    );
     navMenu = screen.getByTestId('nav-menu');
     hamburgerIcon = screen.getByTestId('burger-icon');
   });
