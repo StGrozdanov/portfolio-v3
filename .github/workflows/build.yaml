@@ -45,10 +45,13 @@ jobs:
           path: ${{ steps.app-cache.outputs.path }}
           key: ${{ steps.app-cache.outputs.key }}
           restore-keys: ${{ steps.app-cache.outputs.restore }}
-      - name: Install dependencies (without scripts)
+      - name: Install dependencies
         id: install
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts && npx playwright install --with-deps
+        run: npm ci 
+      - name: Install playwright browsers
+        if: steps.install.outcome == 'success'
+        run: npx playwright install --with-deps
       - name: Run post-install scripts
         if: steps.install.outcome == 'success'
         run: npm rebuild && npm run prepare --if-present
