@@ -2,16 +2,11 @@ import { SocialMedia } from '@/app/api/get-socials/route';
 import styles from './Footer.module.scss';
 import Animate from '../Animate/Animate';
 import Script from 'next/script';
+import { BASE_API_URL } from '@/utils/getBaseAPIUrl';
 
 export default async function Footer() {
-    const BASE_API_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-        : process.env.BASE_API_URL;
-
     let socials: SocialMedia | null = null;
-
     const response = await fetch(`${BASE_API_URL}/get-socials`);
-    
     if (response.ok) socials = await response.json();
     return (
         <>

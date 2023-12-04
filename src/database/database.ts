@@ -1,7 +1,7 @@
 import { Pool, QueryResult } from 'pg';
 import logger from '@/utils/logger';
 
-type QueryReducerArray = [string, any[], number];
+type QueryReducerArray = [string, unknown[], number];
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -23,7 +23,7 @@ const pool = new Pool({
  * @returns values: array of values
  * @returns text: the modified sql query as the pg library expects it 
  */
-const queryConvert = (parameterizedSql: string, params: any) => {
+const queryConvert = (parameterizedSql: string, params: object) => {
     const [text, values] = Object.entries(params).reduce(
         ([sql, array, index], [key, value]) => [sql.replace(`:${key}`, `$${index}`), [...array, value], index + 1] as QueryReducerArray,
         [parameterizedSql, [], 1] as QueryReducerArray
@@ -37,19 +37,23 @@ const queryConvert = (parameterizedSql: string, params: any) => {
  * @returns isEmpty: is there a result from the query?
  * @returns response: the query rows. 
  */
-export const dbQuery = async (sqlQuery: string, args: object) => {
+export const dbQuery = async (sqlQuery: string, args?: object) => {
     const start = Date.now();
     const connection = await pool.connect();
     let result: QueryResult;
 
     try {
-        const { text, values } = queryConvert(sqlQuery, args);
-        result = await connection.query(text, values);
+        if (args) {
+            const { text, values } = queryConvert(sqlQuery, args);
+            result = await connection.query(text, values);
+        } else {
+            result = await connection.query(sqlQuery);
+        }
     } finally {
         connection.release();
     }
 
-    const response: any[] = result.rows;
+    const response: unknown[] = result.rows;
     const isEmpty = response.length === 0;
 
     const duration = Date.now() - start + 'ms';
