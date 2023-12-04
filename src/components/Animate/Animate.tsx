@@ -6,7 +6,7 @@ interface AnimateProps {
     children: React.ReactNode,
     animationName: string,
     animateOnce?: boolean,
-    delay: number,
+    delay?: number,
 }
 
 export default function Animate({ children, animationName, animateOnce, delay }: AnimateProps) {
