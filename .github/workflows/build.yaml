@@ -10,6 +10,8 @@ concurrency:
   cancel-in-progress: true
 env:
   PREVIEW_URL: ${{ secrets.PREVIEW_URL }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   PATH_PREFIX: ${{ github.workspace }}
   CACHE_PREFIX: ""
 
@@ -17,7 +19,6 @@ jobs:
   install_app:
     name: Install
     runs-on: ubuntu-latest
-    env:
     outputs:
       cache-path: ${{ steps.app-cache.outputs.path }}
       cache-key: ${{ steps.app-cache.outputs.key }}
@@ -83,9 +84,6 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.working-directory || github.workspace }}
-    env:
-      PATH_PREFIX: ${{ inputs.working-directory && format('{0}/{1}', github.workspace, inputs.working-directory) || github.workspace }}
-      CACHE_PREFIX: ${{ inputs.working-directory && format('{0}-', inputs.working-directory) || '' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -171,9 +169,6 @@ jobs:
     name: Deploy Nonprod
     needs: [typecheck_app, lint_app, unit_test_app, integration_test_app]
     runs-on: ubuntu-latest
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
@@ -228,9 +223,6 @@ jobs:
     name: Deploy Prod
     needs: [e2e_test_app]
     runs-on: ubuntu-latest
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v3
       - name: Install Vercel CLI
