@@ -1,13 +1,13 @@
 'use client'
 
 import styles from './Navigation.module.scss';
-import { useState } from 'react';
 import Link from 'next/link';
 import { Link as ScrollLink } from 'react-scroll/modules';
 import Image from 'next/image';
+import { useBurgerContext } from '@/hooks/useBurgerContext';
 
 export default function Navigation() {
-    const [isActive, setIsActive] = useState(false);
+    const { isExpanded, update } = useBurgerContext();
     return (
         <nav className={styles.navbar}>
             <Link href={'/'} className={styles.logo}>
@@ -17,7 +17,7 @@ export default function Navigation() {
                 data-testid="nav-menu"
                 className={
                     `${styles['nav-menu']} 
-                    ${isActive
+                    ${isExpanded
                         ? `, ${styles['active-menu']}`
                         : ''
                     }`
@@ -30,7 +30,7 @@ export default function Navigation() {
                         duration={1400}
                         activeClass={styles.active}
                         spy={true}
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={update}
                     >
                         Introduction
                     </ScrollLink>
@@ -42,7 +42,7 @@ export default function Navigation() {
                         duration={1400}
                         activeClass={styles.active}
                         spy={true}
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={update}
                     >
                         About Me
                     </ScrollLink>
@@ -54,7 +54,7 @@ export default function Navigation() {
                         duration={1400}
                         activeClass={styles.active}
                         spy={true}
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={update}
                     >
                         My Work
                     </ScrollLink>
@@ -66,7 +66,7 @@ export default function Navigation() {
                         duration={1400}
                         activeClass={styles.active}
                         spy={true}
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={update}
                     >
                         Contact Me
                     </ScrollLink>
@@ -74,8 +74,8 @@ export default function Navigation() {
             </ul>
             <div
                 data-testid="burger-icon"
-                className={`${styles.hamburger} ${isActive ? `, ${styles['active-burger']}` : ''}`}
-                onClick={() => setIsActive(!isActive)}
+                className={`${styles.hamburger} ${isExpanded ? `, ${styles['active-burger']}` : ''}`}
+                onClick={update}
             >
                 <span className={styles.bar}></span>
                 <span className={styles.bar}></span>
