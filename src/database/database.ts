@@ -1,7 +1,7 @@
 import { Pool, QueryResult } from 'pg';
 import logger from '@/utils/logger';
 
-type QueryReducerArray = [string, unknown[], number];
+type QueryReducerArray = [string, any[], number];
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -23,7 +23,7 @@ const pool = new Pool({
  * @returns values: array of values
  * @returns text: the modified sql query as the pg library expects it 
  */
-const queryConvert = (parameterizedSql: string, params: object) => {
+const queryConvert = (parameterizedSql: string, params: any) => {
     const [text, values] = Object.entries(params).reduce(
         ([sql, array, index], [key, value]) => [sql.replace(`:${key}`, `$${index}`), [...array, value], index + 1] as QueryReducerArray,
         [parameterizedSql, [], 1] as QueryReducerArray
@@ -53,7 +53,7 @@ export const dbQuery = async (sqlQuery: string, args?: object) => {
         connection.release();
     }
 
-    const response: unknown[] = result.rows;
+    const response: any[] = result.rows;
     const isEmpty = response.length === 0;
 
     const duration = Date.now() - start + 'ms';
