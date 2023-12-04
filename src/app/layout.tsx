@@ -4,6 +4,7 @@ import "animate.css/animate.min.css";
 import Navigation from '@/components/Navigation/Navigation';
 import Footer from '@/components/Footer/Footer';
 import { BurgerProvider } from '@/contexts/BurgerContext';
+import { JobsAndProjectsProvider } from '@/contexts/JobsAndProjectsContext';
 
 export const metadata: Metadata = {
   title: 'Stoyan Grozdanov Portfolio',
@@ -17,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <BurgerProvider>
-          <Navigation />
-          {children}
-          <Footer />
-        </BurgerProvider>
+        <JobsAndProjectsProvider>
+          <BurgerProvider>
+            <Navigation />
+            {children}
+            <Footer />
+          </BurgerProvider>
+        </JobsAndProjectsProvider>
       </body>
     </html>
   )
