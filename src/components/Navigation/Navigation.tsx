@@ -1,20 +1,22 @@
 'use client'
 
+import { useBurgerContext } from '../../hooks/useBurgerContext';
 import styles from './Navigation.module.scss';
+import ReactScrollNavElements from './modules/ReactScrollNavElements/ReactScrollNavElements';
+import ReactRouterNavElements from './modules/ReactRouterNavElements copy/ReactRouterNavElements';
 import Link from 'next/link';
-import { Link as ScrollLink } from 'react-scroll/modules';
 import Image from 'next/image';
-import { useBurgerContext } from '@/hooks/useBurgerContext';
+import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
     const { isExpanded, update } = useBurgerContext();
+    const pathname = usePathname();
     return (
         <nav className={styles.navbar}>
             <Link href={'/'} className={styles.logo}>
-                <Image src='/images/logo.png' alt='' width={500} height={500} />
+                <Image src='/images/logo.png' alt='' width={500} height={500}></Image>
             </Link>
             <ul
-                data-testid="nav-menu"
                 className={
                     `${styles['nav-menu']} 
                     ${isExpanded
@@ -23,57 +25,13 @@ export default function Navigation() {
                     }`
                 }
             >
-                <li className={styles['nav-item']}>
-                    <ScrollLink
-                        to='intro'
-                        smooth={true}
-                        duration={1400}
-                        activeClass={styles.active}
-                        spy={true}
-                        onClick={update}
-                    >
-                        Introduction
-                    </ScrollLink>
-                </li>
-                <li className={styles['nav-item']}>
-                    <ScrollLink
-                        to='about'
-                        smooth={true}
-                        duration={1400}
-                        activeClass={styles.active}
-                        spy={true}
-                        onClick={update}
-                    >
-                        About Me
-                    </ScrollLink>
-                </li>
-                <li className={styles['nav-item']}>
-                    <ScrollLink
-                        to='work'
-                        smooth={true}
-                        duration={1400}
-                        activeClass={styles.active}
-                        spy={true}
-                        onClick={update}
-                    >
-                        My Work
-                    </ScrollLink>
-                </li>
-                <li className={styles['nav-item']}>
-                    <ScrollLink
-                        to='contacts'
-                        smooth={true}
-                        duration={1400}
-                        activeClass={styles.active}
-                        spy={true}
-                        onClick={update}
-                    >
-                        Contact Me
-                    </ScrollLink>
-                </li>
+                {
+                    pathname.includes('jobs') || pathname.includes('projects')
+                        ? <ReactRouterNavElements update={update} />
+                        : <ReactScrollNavElements update={update} />
+                }
             </ul>
             <div
-                data-testid="burger-icon"
                 className={`${styles.hamburger} ${isExpanded ? `, ${styles['active-burger']}` : ''}`}
                 onClick={update}
             >
