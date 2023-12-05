@@ -14,9 +14,10 @@ export default function Navigation() {
     return (
         <nav className={styles.navbar}>
             <Link href={'/'} className={styles.logo}>
-                <Image src='/images/logo.png' alt='' width={500} height={500}></Image>
+                <Image src='/images/logo.png' alt='' width={500} height={500} />
             </Link>
             <ul
+                data-testid="nav-menu"
                 className={
                     `${styles['nav-menu']} 
                     ${isExpanded
@@ -26,12 +27,13 @@ export default function Navigation() {
                 }
             >
                 {
-                    pathname.includes('jobs') || pathname.includes('projects')
+                    pathname && pathname.includes('jobs') || pathname && pathname.includes('projects')
                         ? <ReactRouterNavElements update={update} />
                         : <ReactScrollNavElements update={update} />
                 }
             </ul>
             <div
+                data-testid="burger-icon"
                 className={`${styles.hamburger} ${isExpanded ? `, ${styles['active-burger']}` : ''}`}
                 onClick={update}
             >
