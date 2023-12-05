@@ -7,7 +7,6 @@ import Partners from './modules/components/Partners/Partners';
 import Resume from './modules/components/Resume/Resume';
 import CarouselLinks from './modules/components/CarouselLinks/CarouselLinks';
 import { useFetchBasicUserInfo } from './modules/hooks/useFetchBasicUserInfo';
-import { NEXT_BASE_API_URL } from '@/utils/getBaseAPIUrl';
 import { TrackingInfoResponse } from '@/app/api/track-visitor/route';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 import { useEffect, useState } from 'react';
@@ -17,9 +16,13 @@ export default function Introduction() {
     const [userLocationData, setUserLocationData] = useState<TrackingInfoResponse>();
     const visitaitonDevice = useDeviceDetection();
 
+    const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+        : process.env.NEXT_PUBLIC_BASE_API_URL;
+
     useEffect(() => {
         if (visitaitonDevice) {
-            fetch(`${NEXT_BASE_API_URL}/track-visitor`)
+            fetch(`${BASE_URL}/track-visitor`)
                 .then(data => data.json())
                 .then(response => {
                     const locationData: TrackingInfoResponse = {
@@ -38,7 +41,7 @@ export default function Introduction() {
 
     useEffect(() => {
         if (visitaitonDevice && userLocationData) {
-            fetch(`${NEXT_BASE_API_URL}/analytics`, {
+            fetch(`${BASE_URL}/analytics`, {
                 method: 'POST',
                 body: JSON.stringify({
                     deviceType: visitaitonDevice,

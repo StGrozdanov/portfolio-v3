@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useCarouselData } from "./useCarouselData";
-import { NEXT_BASE_API_URL } from "@/utils/getBaseAPIUrl";
 import { BasicInfoResponse } from "@/app/api/basic-user-info/route";
 
 /**
@@ -14,8 +13,12 @@ export function useFetchBasicUserInfo() {
     const [basicUserInfo, setBasicUserInfo] = useState<BasicInfoResponse>();
     const { carouselData, setCarouselImages, setCurrentCarouselLabel } = useCarouselData();
 
+    const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+        : process.env.NEXT_PUBLIC_BASE_API_URL;
+
     useEffect(() => {
-        fetch(`${NEXT_BASE_API_URL}/basic-user-info`)
+        fetch(`${BASE_URL}/basic-user-info`)
             .then(response => response.json())
             .then(result => {
                 const baseUserInfo = result as unknown as BasicInfoResponse;

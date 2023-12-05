@@ -3,7 +3,6 @@
 import { createContext, useEffect, useState } from "react";
 import { ContainerProps } from "./types";
 import { JobDetails, JobsAndProjects, ProjectsDetails } from "@/app/api/jobs-and-projects/route";
-import { NEXT_BASE_API_URL } from "@/utils/getBaseAPIUrl";
 
 export interface JobsAndProjectsContextType {
     getJobByCompanyName: (companyName: string) => JobDetails | undefined,
@@ -18,14 +17,18 @@ export const JobsAndProjectsProvider = ({ children }: ContainerProps) => {
     const [jobs, setJobs] = useState<JobDetails[]>([]);
     const [projects, setProjects] = useState<ProjectsDetails[]>([]);
 
+    const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+        : process.env.NEXT_PUBLIC_BASE_API_URL;
+
     useEffect(() => {
-        fetch(`${NEXT_BASE_API_URL}/jobs-and-projects`)
-        .then(response => response.json())
-        .then(result => {
-            const jobsAndProjects = result as unknown as JobsAndProjects;
-            setJobs(jobsAndProjects.jobs);
-            setProjects(jobsAndProjects.projects);
-        })
+        fetch(`${BASE_URL}/jobs-and-projects`)
+            .then(response => response.json())
+            .then(result => {
+                const jobsAndProjects = result as unknown as JobsAndProjects;
+                setJobs(jobsAndProjects.jobs);
+                setProjects(jobsAndProjects.projects);
+            })
     }, []);
 
     const getJobByCompanyName = (companyName: string) => jobs?.find(job => companyName === job.company);
