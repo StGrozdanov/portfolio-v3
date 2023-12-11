@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import log from '../../../utils/logger';
 
+export const dynamic = 'force-dynamic'
 export interface TrackingInfoResponse {
     country_code: string,
     country_name: string,

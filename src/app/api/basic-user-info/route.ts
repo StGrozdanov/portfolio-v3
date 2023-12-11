@@ -3,6 +3,7 @@ import { dbQuery } from "@/database/database";
 import { NextResponse } from "next/server";
 import log from '../../../utils/logger';
 
+export const dynamic = 'force-dynamic'
 export interface BasicInfoResponse {
     email: string,
     cvlink: string,

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import log from '../../../utils/logger';
 import { dbQuery } from '../../../database/database';
 
+export const dynamic = 'force-dynamic'
 export interface SocialMedia {
     facebook: string,
     linkedIn: string,
