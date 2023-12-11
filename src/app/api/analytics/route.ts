@@ -4,7 +4,7 @@ import { dbQuery } from "@/database/database";
 import * as validator from '../../../utils/validator';
 import moment from "moment";
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900;
 export interface Visitation {
     ipAddress: string,
     originCountry: string,

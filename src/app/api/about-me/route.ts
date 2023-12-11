@@ -2,6 +2,8 @@ import { dbQuery } from "@/database/database";
 import { NextResponse } from "next/server";
 import log from '../../../utils/logger';
 
+export const revalidate = 900;
+
 export interface AboutMeResponse {
     techstack: string[],
     softskills: string[],
