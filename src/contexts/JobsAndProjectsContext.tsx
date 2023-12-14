@@ -13,13 +13,13 @@ export interface JobsAndProjectsContextType {
 
 export const JobsAndProjectsContext = createContext<JobsAndProjectsContextType | null>(null);
 
+const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+    : process.env.NEXT_PUBLIC_BASE_API_URL;
+
 export const JobsAndProjectsProvider = ({ children }: ContainerProps) => {
     const [jobs, setJobs] = useState<JobDetails[]>([]);
     const [projects, setProjects] = useState<ProjectsDetails[]>([]);
-
-    const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-        : process.env.NEXT_PUBLIC_BASE_API_URL;
 
     useEffect(() => {
         fetch(`${BASE_URL}/jobs-and-projects`)

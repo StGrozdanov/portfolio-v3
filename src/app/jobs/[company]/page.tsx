@@ -1,18 +1,27 @@
-'use client'
-
+import { JobDetails, JobsAndProjects } from "@/app/api/jobs-and-projects/route";
 import DescriptionArticle from "@/components/Jobs/DescriptionArticle/DescriptionArticle";
 import HeadingImageArticle from "@/components/Jobs/HeadingImageArticle/HeadingImageArticle";
 import ImageArticle from "@/components/Jobs/ImageArticle/ImageArticle";
 import NextJobArticle from "@/components/Jobs/NextJobArticle/NextJobArticle";
 import ThreeSectionDescriptionArticle from "@/components/Jobs/ThreeSectionDescriptionArticle/ThreeSectionDescriptionArticle";
-import { useJobsAndProjectsContext } from "@/hooks/useJobsAndProjectsContext";
-import { useParams } from "next/navigation";
 
-export default function JobsDetails() {
-    const { jobs, getJobByCompanyName } = useJobsAndProjectsContext();
-    const params = useParams();
-    const decodedParams = decodeURI(params.company as string);
-    const job = getJobByCompanyName(decodedParams);
+type Props = {
+    params: {
+        company: string
+    }
+}
+
+const getJobByCompanyName = (jobs: JobDetails[], companyName: string) => jobs?.find(job => companyName === job.company);
+
+const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+    : process.env.BASE_API_URL;
+
+export default async function JobsDetails({ params: { company } }: Props) {
+    const jobsAndProjectsData = await fetch(`${BASE_URL}/jobs-and-projects`);
+    const jobsAndProjects = await jobsAndProjectsData.json() as unknown as JobsAndProjects;
+    const decodedParams = decodeURI(company);
+    const job = getJobByCompanyName(jobsAndProjects.jobs, decodedParams);
 
     return (
         <section>
@@ -20,7 +29,13 @@ export default function JobsDetails() {
             <ThreeSectionDescriptionArticle {...job} />
             <ImageArticle imgURL={job?.imgUrl[1]} />
             <DescriptionArticle achievements={job?.achievements} />
-            <NextJobArticle jobs={jobs} currentJob={job?.company} />
+            <NextJobArticle jobs={jobsAndProjects.jobs} currentJob={job?.company} />
         </section>
     )
+}
+
+export async function generateStaticParams() {
+    const jobsAndProjectsResponse = await fetch(`${BASE_URL}/jobs-and-projects`);
+    const jobsAndProjectsData = await jobsAndProjectsResponse.json() as unknown as JobsAndProjects;
+    return jobsAndProjectsData.jobs.map(job => job.company);
 }

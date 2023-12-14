@@ -10,8 +10,6 @@ export interface AboutMeResponse {
     hobbies: string[],
 }
 
-export const dynamic = 'force-dynamic';
-
 /**
  * retrieves user info as defined in the BasicInfoResponse interface
  * @returns BasicInfoResponse interface or an empty object
