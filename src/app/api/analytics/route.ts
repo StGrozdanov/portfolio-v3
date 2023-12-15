@@ -4,7 +4,7 @@ import { dbQuery } from "@/database/database";
 import * as validator from '../../../utils/validator';
 import moment from "moment";
 
-export const revalidate = 900;
+export const revalidate = 0;
 export interface Visitation {
     ipAddress: string,
     originCountry: string,
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
                 VALUES (:date, :deviceType, :originCountry, :ipAddress);`,
                 { ...visitationData }
             );
- 
+
             return NextResponse.json({ status: 201 })
         }
         return NextResponse.json(validation, { status: 400 })
