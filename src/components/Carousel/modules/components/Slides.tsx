@@ -2,7 +2,12 @@ import { CarouselImage } from '@/components/Introduction/modules/hooks/useCarous
 import styles from './Slides.module.scss';
 import Image from 'next/image';
 
-export default function Slides(image: CarouselImage) {
+interface SlideProps {
+    image: CarouselImage,
+    isFirstSlide: boolean,
+}
+
+export default function Slides({ image, isFirstSlide }: SlideProps) {
     return (
         <Image
             src={image.imgURL}
@@ -10,6 +15,7 @@ export default function Slides(image: CarouselImage) {
             className={styles.img}
             width={image.width}
             height={image.height}
+            priority={isFirstSlide ? true : false}
         />
     );
 }

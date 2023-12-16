@@ -32,7 +32,11 @@ export default function CarouselComponent(data: CarouselProps) {
         >
             {
                 data.images?.map((image, index) =>
-                    <Slides key={image.imgURL ? image.imgURL : 'https://' + index} {...image} />
+                    <Slides
+                        key={image.imgURL ? image.imgURL : 'https://' + index}
+                        isFirstSlide={index === 0}
+                        image={image}
+                    />
                 )
             }
         </Carousel>
