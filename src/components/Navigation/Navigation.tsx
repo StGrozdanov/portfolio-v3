@@ -14,7 +14,13 @@ export default function Navigation() {
     return (
         <nav className={styles.navbar}>
             <Link href={'/'} className={styles.logo}>
-                <Image src='/images/logo.png' alt='' width={500} height={500} />
+                <Image
+                    src='/images/logo.png'
+                    alt=''
+                    width={500}
+                    height={500}
+                    priority={true}
+                />
             </Link>
             <ul
                 data-testid="nav-menu"
