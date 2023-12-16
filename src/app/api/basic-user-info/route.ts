@@ -4,11 +4,18 @@ import { NextResponse } from "next/server";
 import log from '../../../utils/logger';
 
 export const revalidate = 900;
+
+export interface Partner {
+    imgURL: string,
+    width: number,
+    height: number,
+}
+
 export interface BasicInfoResponse {
     email: string,
     cvlink: string,
     aboutme: string,
-    partners: string[],
+    partners: Partner[],
     carousel: CarouselImage[],
 }
 

@@ -1,21 +1,22 @@
+import { Partner } from '@/app/api/basic-user-info/route';
 import styles from './Partners.module.scss';
 import Image from 'next/image';
 
 interface PartnerProps {
-    partners: string[],
+    partners: Partner[],
 }
 
 export default function Partners({ partners }: PartnerProps) {
     return (
         <ul className={styles['clients-ul']}>
             {
-                partners.length > 0 && partners.map((partnerURL, index) =>
-                    <li key={partnerURL + index}>
+                partners.length > 0 && partners.map((partner, index) =>
+                    <li key={partner.imgURL + index}>
                         <Image
-                            src={partnerURL}
+                            src={partner.imgURL}
                             alt=''
-                            width={100}
-                            height={100}
+                            width={partner.width}
+                            height={partner.height}
                             priority={true}
                         />
                     </li>)
