@@ -9,8 +9,8 @@ import { ReactElement, ReactNode } from "react";
 
 export default function CarouselComponent(data: CarouselProps) {
     const slideChangeHandler = (index: number, element: ReactNode) => {
-        const reactElement = element as ReactElement
-        const slideData = reactElement.props.data;
+        const reactElement = element as ReactElement;
+        const slideData = reactElement.props.image.data;
         data.carouselChangeHandler && data.carouselChangeHandler(slideData);
     }
 
