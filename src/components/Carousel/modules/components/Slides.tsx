@@ -4,14 +4,12 @@ import Image from 'next/image';
 
 export default function Slides(image: CarouselImage) {
     return (
-        <div>
-            <Image
-                src={image.imgURL}
-                alt='carousel-image'
-                className={styles.img}
-                width={1000}
-                height={1000}
-            />
-        </div>
+        <Image
+            src={image.imgURL}
+            alt='carousel-image'
+            className={styles.img}
+            width={image.width}
+            height={image.height}
+        />
     );
 }
