@@ -11,7 +11,13 @@ export default function Partners({ partners }: PartnerProps) {
             {
                 partners.length > 0 && partners.map((partnerURL, index) =>
                     <li key={partnerURL + index}>
-                        <Image src={partnerURL} alt='' width={100} height={100} />
+                        <Image
+                            src={partnerURL}
+                            alt=''
+                            width={100}
+                            height={100}
+                            priority={true}
+                        />
                     </li>)
             }
         </ul>
