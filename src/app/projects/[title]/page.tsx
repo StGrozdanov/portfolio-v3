@@ -25,9 +25,9 @@ export default async function ProjectsDetails({ params: { title } }: Props) {
 
     return (
         <section>
-            <HeadingImageArticle jobImgURL={project?.imgUrl[0]} />
+            <HeadingImageArticle image={project?.images[0]} />
             <ThreeSectionDescriptionArticle {...project} />
-            <ImageArticle imgURL={project?.imgUrl[1]} />
+            <ImageArticle image={project?.images[1]} />
             <DescriptionArticle description={project?.description} />
             <NextProjectArticle currentProject={project?.title} projects={jobsAndProjects.projects} />
         </section>

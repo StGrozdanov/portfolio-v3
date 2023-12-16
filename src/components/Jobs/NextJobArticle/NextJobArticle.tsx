@@ -38,7 +38,7 @@ export default function NextJobArticle({ jobs, currentJob }: NextJobArticleProps
             </section>
             <div
                 className={styles['img-article-container']}
-                style={{ backgroundImage: `url(${findTheNextArticle(jobs)[0]?.imgUrl[0]})` }}
+                style={{ backgroundImage: `url(${findTheNextArticle(jobs)[0]?.images[0].imgURL})` }}
             />
         </article>
     );

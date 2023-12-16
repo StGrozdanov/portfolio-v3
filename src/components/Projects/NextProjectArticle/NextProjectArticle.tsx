@@ -38,7 +38,7 @@ export default function NextProjectArticle({ projects, currentProject }: NextPro
             </section>
             <div
                 className={styles['img-article-container']}
-                style={{ backgroundImage: `url(${findTheNextArticle(projects)[0]?.imgUrl[0]})` }}
+                style={{ backgroundImage: `url(${findTheNextArticle(projects)[0]?.images[0].imgURL})` }}
             />
         </article>
     );

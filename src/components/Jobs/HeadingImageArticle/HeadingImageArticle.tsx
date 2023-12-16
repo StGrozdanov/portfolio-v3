@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import { useCallback } from "react";
 import styles from './HeadingImageArticle.module.scss';
+import { Images } from "@/app/api/jobs-and-projects/route";
 
-interface HeadingImageArticleProps { jobImgURL?: string }
+interface HeadingImageArticleProps { image?: Images }
 
-export default function HeadingImageArticle({ jobImgURL }: HeadingImageArticleProps) {
+export default function HeadingImageArticle({ image }: HeadingImageArticleProps) {
     const iconClickHandler = useCallback(() => {
         window.scroll({
             behavior: 'smooth',
@@ -19,7 +20,7 @@ export default function HeadingImageArticle({ jobImgURL }: HeadingImageArticlePr
         <article className={styles['img-article']}>
             <div
                 className={styles['img-article-container']}
-                style={{ backgroundImage: `url(${jobImgURL})` }}
+                style={{ backgroundImage: `url(${image?.imgURL})` }}
             />
             <FontAwesomeIcon
                 style={{ position: 'absolute', top: '50%', right: 20, fontSize: '4rem', cursor: 'pointer' }}

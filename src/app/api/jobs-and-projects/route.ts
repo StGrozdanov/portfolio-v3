@@ -6,7 +6,7 @@ export const revalidate = 900;
 
 export interface JobDetails {
     company: string,
-    imgUrl: string[],
+    images: Images[],
     title: string,
     started_at: Date,
     ended_at: Date | null,
@@ -15,9 +15,15 @@ export interface JobDetails {
     techStack: string[],
 }
 
+export interface Images {
+    imgURL: string,
+    width: number,
+    height: number,
+}
+
 export interface ProjectsDetails {
     title: string,
-    imgUrl: string[],
+    images: Images[],
     startedAt: Date,
     endedAt: Date | null,
     description: string,
