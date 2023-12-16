@@ -12,6 +12,8 @@ export interface CarouselImageData {
 export interface CarouselImage {
     imgURL: string,
     data: CarouselImageData,
+    width: number,
+    height: number
 }
 
 /**
