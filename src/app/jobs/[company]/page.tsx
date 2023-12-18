@@ -11,6 +11,8 @@ type Props = {
     }
 }
 
+export const revalidate = 900;
+
 const getJobByCompanyName = (jobs: JobDetails[], companyName: string) => jobs?.find(job => companyName === job.company);
 
 const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'

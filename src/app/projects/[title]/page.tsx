@@ -5,6 +5,8 @@ import DescriptionArticle from "@/components/Projects/DescriptionArticle/Descrip
 import NextProjectArticle from "@/components/Projects/NextProjectArticle/NextProjectArticle";
 import ThreeSectionDescriptionArticle from "@/components/Projects/ThreeSectionDescriptionArticle/ThreeSectionDescriptionArticle";
 
+export const revalidate = 900;
+
 type Props = {
     params: {
         title: string
