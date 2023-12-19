@@ -24,6 +24,7 @@ export default function Introduction() {
                 headers: new Headers({
                     'Content-Type': 'application/json',
                 }),
+                cache: 'no-cache',
             }).catch(err => console.error(err));
         }
     }, [visitaitonDevice]);
