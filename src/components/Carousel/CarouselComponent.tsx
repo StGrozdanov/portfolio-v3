@@ -22,7 +22,7 @@ export default function CarouselComponent(data: CarouselProps) {
             infiniteLoop={true}
             className={`carousel-container ${styles.container}`}
             showStatus={false}
-            swipeable={true}
+            swipeable={false}
             animationHandler={useCarouselFadeInAnimation}
             transitionTime={800}
             interval={5000}
