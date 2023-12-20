@@ -7,7 +7,6 @@ import ReactRouterNavElements from './modules/ReactRouterNavElements copy/ReactR
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import logo from '@public/images/logo.png'
 
 export default function Navigation() {
     const { isExpanded, update } = useBurgerContext();
@@ -16,9 +15,11 @@ export default function Navigation() {
         <nav className={styles.navbar}>
             <Link href={'/'} className={styles.logo}>
                 <Image
-                    src={logo}
+                    src='/images/logo.png'
                     alt=''
                     priority={true}
+                    width={189}
+                    height={160}
                 />
             </Link>
             <ul
