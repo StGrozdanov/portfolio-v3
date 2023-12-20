@@ -6,7 +6,7 @@ import { faCode, faHeart, faUsers, faCaretDown, faCaretUp } from '@fortawesome/f
 import { ArticleProps, IconTypes } from './article-interfaces';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const findIcon = (heading: string): IconDefinition => {
     const icons: IconTypes = {
@@ -19,7 +19,12 @@ const findIcon = (heading: string): IconDefinition => {
 
 export default function Article({ heading, details, threshold }: ArticleProps) {
     const [ulIsExpanded, setUlIsExpanded] = useState(false);
+    const [isMobileResolution, setIsMobileResolution] = useState(false);
     const contentHandler = () => setUlIsExpanded(!ulIsExpanded);
+
+    useEffect(() => {
+        setIsMobileResolution(window.innerHeight < 1025);
+    }, []);
 
     return (
         <article className={styles.container}>
@@ -32,7 +37,7 @@ export default function Article({ heading, details, threshold }: ArticleProps) {
             <ul className={styles['list-container']}>
                 <AnimationOnScroll animateIn='animate__fadeInUp' animateOnce={true}>
                     {
-                        threshold && !ulIsExpanded
+                        threshold && !ulIsExpanded && isMobileResolution
                             ?
                             details.map((detail, index) => {
                                 if (index < threshold) {
@@ -44,7 +49,7 @@ export default function Article({ heading, details, threshold }: ArticleProps) {
                             : details.map(detail => < li key={detail} > {detail}</li>)
                     }
                     {
-                        threshold && !ulIsExpanded
+                        threshold && !ulIsExpanded && isMobileResolution
                             ? <FontAwesomeIcon
                                 className={styles.icon}
                                 onClick={contentHandler}
@@ -52,7 +57,7 @@ export default function Article({ heading, details, threshold }: ArticleProps) {
                                 beatFade
                                 color='orange'
                             />
-                            : threshold
+                            : threshold && isMobileResolution
                                 ? <FontAwesomeIcon
                                     className={styles.icon}
                                     onClick={contentHandler}

@@ -40,5 +40,6 @@
     @include maxWidthMediaQuery(1024px) {
         flex-direction: column;
         align-items: center;
+        justify-content: unset;
     }
 }
