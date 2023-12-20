@@ -7,7 +7,7 @@ import ReactRouterNavElements from './modules/ReactRouterNavElements copy/ReactR
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import logo from '../../../public/images/logo.png'
+import logo from '@public/images/logo.png'
 
 export default function Navigation() {
     const { isExpanded, update } = useBurgerContext();
