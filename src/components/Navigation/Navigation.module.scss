@@ -3,20 +3,26 @@
 @use 'src/scss/common/media' as *;
 
 .logo {
-    height: 290px;
-    width: 250px;
+    height: 100px;
+    width: 100px;
+    margin-left: 120px;
     z-index: 3;
     cursor: pointer;
     @include smoothTransitionVerticalAnimation(-80%, -80%, 1s);
 
     @include minWidthMediaQuery(1920px) {
-        height: 375px;
-        width: 320px;
+        height: 125px;
+        width: 125px;
     }
 
     @include maxWidthMediaQuery(768px) {
-        height: 200px;
-        width: 140px;
+        margin-left: 20px;
+    }
+
+    @include maxWidthMediaQuery(425px) {
+        margin-left: 0px;
+        height: 85px;
+        width: 85px;
     }
 
     img {
@@ -113,14 +119,17 @@
     }
 
     @include maxWidthMediaQuery(768px) {
-        width: 35px;
-        height: 50px;
+        width: 65px;
+        height: 60px;
         padding: 10px 0 0 0;
-        margin-right: 90px;
+        margin-right: 71px;
     }
 
     @include maxWidthMediaQuery(425px) {
-        margin-right: 40px;
+        margin-right: 12px;
+        width: 47px;
+        height: 55px;
+        padding: 12px 0 0 0;
     }
 
     &:before {
