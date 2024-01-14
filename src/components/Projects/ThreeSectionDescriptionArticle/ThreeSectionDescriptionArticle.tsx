@@ -45,7 +45,7 @@ export default function ThreeSectionDescriptionArticle({
                     >check it out!</a>
                 </h4>
                 <h3>Duration</h3>
-                <h4>{moment(started_at).format('MMM YYYY')} - {moment(ended_at).format('MMM YYYY')}</h4>
+                <h4>{moment(started_at).format('MMM YYYY')} - {ended_at ? moment(ended_at).format('MMM YYYY') : 'now'}</h4>
             </section>
             <section className={styles['description-section']}>
                 <h3>Concept</h3>
