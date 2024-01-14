@@ -10,7 +10,7 @@ export default function ProjectsAndWork() {
     return (
         <section id='work' className={styles.container}>
             {jobs.map(job =>
-                <AnimationOnScroll key={job.company + job.title} animateIn='animate__fadeInLeft' animateOnce={true}>
+                <AnimationOnScroll key={job.company + job.title} animateIn='animate__zoomIn' animateOnce={true}>
                     <JobsAndProjectsCard
                         key={job.company + job.title}
                         image={job.images[0]}
@@ -20,7 +20,7 @@ export default function ProjectsAndWork() {
                 </AnimationOnScroll>
             )}
             {projects.map(project =>
-                <AnimationOnScroll key={project.repository} animateIn='animate__fadeInUp' animateOnce={true}>
+                <AnimationOnScroll key={project.repository} animateIn='animate__zoomIn' animateOnce={true}>
                     <JobsAndProjectsCard
                         key={project.repository}
                         image={project.images[0]}
