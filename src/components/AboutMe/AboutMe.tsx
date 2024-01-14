@@ -4,6 +4,8 @@ import Article from './modules/Article';
 import { BASE_API_URL } from '@/utils/getBaseAPIUrl';
 import Animate from '../Animate/Animate';
 
+export const revalidate = 900;
+
 export default async function AboutMe() {
     let aboutMe: AboutMeResponse | null = null;
     const response = await fetch(`${BASE_API_URL}/about-me`);

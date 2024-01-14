@@ -5,6 +5,8 @@ import JobsAndProjectsCard from "./modules/JobsAndProjectsCard";
 import styles from './ProjectsAndWork.module.scss';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 
+export const revalidate = 900;
+
 export default function ProjectsAndWork() {
     const { jobs, projects } = useJobsAndProjectsContext();
     return (

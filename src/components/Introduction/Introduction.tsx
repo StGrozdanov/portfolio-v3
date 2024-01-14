@@ -10,6 +10,8 @@ import { useFetchBasicUserInfo } from './modules/hooks/useFetchBasicUserInfo';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 import { useEffect } from 'react';
 
+export const revalidate = 900;
+
 export default function Introduction() {
     const { basicUserInfo, carouselData } = useFetchBasicUserInfo();
     const visitaitonDevice = useDeviceDetection();
