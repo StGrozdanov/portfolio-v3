@@ -4,8 +4,8 @@ import moment from "moment";
 
 interface ThreeSectionDescriptionArticleProps {
     title?: string,
-    started_at?: Date,
-    ended_at?: Date | null,
+    startedAt?: Date,
+    endedAt?: Date | null,
     summary?: string,
     techStack?: string[],
     link?: string,
@@ -14,8 +14,8 @@ interface ThreeSectionDescriptionArticleProps {
 
 export default function ThreeSectionDescriptionArticle({
     title,
-    started_at,
-    ended_at,
+    startedAt,
+    endedAt,
     summary,
     techStack,
     link,
@@ -45,7 +45,7 @@ export default function ThreeSectionDescriptionArticle({
                     >check it out!</a>
                 </h4>
                 <h3>Duration</h3>
-                <h4>{moment(started_at).format('MMM YYYY')} - {ended_at ? moment(ended_at).format('MMM YYYY') : 'now'}</h4>
+                <h4>{moment(startedAt, 'YYYY-MM-DD').format('MMMM Do YYYY')} - {endedAt ? moment(endedAt, 'YYYY-MM-DD').format('MMMM Do YYYY') : 'now'}</h4>
             </section>
             <section className={styles['description-section']}>
                 <h3>Concept</h3>
