@@ -39,5 +39,5 @@ export default async function ProjectsDetails({ params: { title } }: Props) {
 export async function generateStaticParams() {
     const jobsAndProjectsResponse = await fetch(`${BASE_URL}/jobs-and-projects`);
     const jobsAndProjectsData = await jobsAndProjectsResponse.json() as unknown as JobsAndProjects;
-    return jobsAndProjectsData.projects.map(project => project.title);
+    return jobsAndProjectsData.projects?.map(project => project.title);
 }
