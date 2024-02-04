@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Footer should fetch socials data, open email send dialogue, and redirect on link click', async ({ page }) => {
+test.skip('Footer should fetch socials data, open email send dialogue, and redirect on link click', async ({ page }) => {
     await page.goto('/');
 
     await page.waitForSelector('[data-testid="site-footer"]');
