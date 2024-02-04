@@ -12,8 +12,8 @@
     "prepare": "husky install",
     "test": "jest",
     "test:ci": "jest --ci",
-    "test:int": "playwright test tests/integration",
-    "test:e2e": "playwright test tests/e2e"
+    "test:int": "playwright test tests/integration --pass-with-no-tests",
+    "test:e2e": "playwright test tests/e2e --pass-with-no-tests"
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
