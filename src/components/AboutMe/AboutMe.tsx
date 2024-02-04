@@ -25,7 +25,7 @@ export default async function AboutMe() {
                 <Article
                     heading={'Tech Stack'}
                     details={aboutMe ? aboutMe.techstack : []}
-                    threshold={aboutMe ? aboutMe.softskills.length : 0}
+                    threshold={aboutMe ? aboutMe.softskills?.length : 0}
                 />
                 <Article heading={'Soft Skills'} details={aboutMe ? aboutMe.softskills : []} />
                 <Article heading={'Hobbies'} details={aboutMe ? aboutMe.hobbies : []} />

@@ -11,7 +11,7 @@ export default function ProjectsAndWork() {
     const { jobs, projects } = useJobsAndProjectsContext();
     return (
         <section id='work' className={styles.container}>
-            {jobs.map(job =>
+            {jobs?.map(job =>
                 <AnimationOnScroll key={job.company + job.title} animateIn='animate__zoomIn' animateOnce={true}>
                     <JobsAndProjectsCard
                         key={job.company + job.title}
@@ -21,7 +21,7 @@ export default function ProjectsAndWork() {
                     />
                 </AnimationOnScroll>
             )}
-            {projects.map(project =>
+            {projects?.map(project =>
                 <AnimationOnScroll key={project.repository} animateIn='animate__zoomIn' animateOnce={true}>
                     <JobsAndProjectsCard
                         key={project.repository}

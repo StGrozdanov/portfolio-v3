@@ -41,14 +41,14 @@ export default function Article({ heading, details, threshold }: ArticleProps) {
                     {
                         isClient && threshold && !ulIsExpanded && isTabletOrMobile
                             ?
-                            details.map((detail, index) => {
+                            details?.map((detail, index) => {
                                 if (index < threshold) {
                                     return < li key={detail} > {detail}</li>;
                                 } else {
                                     return;
                                 }
                             })
-                            : details.map(detail => < li key={detail} > {detail}</li>)
+                            : details?.map(detail => < li key={detail} > {detail}</li>)
                     }
                     {
                         isClient && threshold && !ulIsExpanded && isTabletOrMobile

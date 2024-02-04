@@ -10,7 +10,7 @@ export default function Partners({ partners }: PartnerProps) {
     return (
         <ul className={styles['clients-ul']}>
             {
-                partners.length > 0 && partners.map((partner, index) =>
+                partners?.length > 0 && partners?.map((partner, index) =>
                     <li key={partner.imgURL + index}>
                         <Image
                             src={partner.imgURL}
