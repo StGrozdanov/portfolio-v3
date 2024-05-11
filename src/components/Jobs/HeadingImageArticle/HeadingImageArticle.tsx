@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownLong } from "@fortawesome/free-solid-svg-icons";
 import { useCallback } from "react";
 import styles from './HeadingImageArticle.module.scss';
-import { Images } from "@/app/api/jobs-and-projects/route";
+import { Images } from "@/interfaces/interfaces";
 
 interface HeadingImageArticleProps { image?: Images }
 

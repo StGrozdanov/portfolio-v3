@@ -5,7 +5,7 @@ import styles from './NextJobArticle.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import { JobDetails } from '@/app/api/jobs-and-projects/route';
+import { JobDetails } from '@/interfaces/interfaces';
 
 interface NextJobArticleProps {
     jobs: JobDetails[],

@@ -1,4 +1,4 @@
-import { Images } from '@/app/api/jobs-and-projects/route';
+import { Images } from '@/interfaces/interfaces';
 import styles from './ImageArticle.module.scss';
 
 type ImageArticleProps = { image?: Images }

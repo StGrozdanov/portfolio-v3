@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import styles from './NextProjectArticle.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
-import { ProjectsDetails } from '@/app/api/jobs-and-projects/route';
 import Link from 'next/link';
+import { ProjectsDetails } from '@/interfaces/interfaces';
 
 interface NextProjectArticleProps {
     projects: ProjectsDetails[],
