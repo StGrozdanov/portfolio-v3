@@ -1,11 +1,9 @@
-import { JobsAndProjects, ProjectsDetails } from "@/app/api/jobs-and-projects/route";
 import HeadingImageArticle from "@/components/Jobs/HeadingImageArticle/HeadingImageArticle";
 import ImageArticle from "@/components/Jobs/ImageArticle/ImageArticle";
 import DescriptionArticle from "@/components/Projects/DescriptionArticle/DescriptionArticle";
 import NextProjectArticle from "@/components/Projects/NextProjectArticle/NextProjectArticle";
 import ThreeSectionDescriptionArticle from "@/components/Projects/ThreeSectionDescriptionArticle/ThreeSectionDescriptionArticle";
-
-export const revalidate = 900;
+import { getJobsAndProjectsData } from "@/database/queries";
 
 type Props = {
     params: {
@@ -13,31 +11,27 @@ type Props = {
     }
 }
 
-const getProjectByTitle = (projects: ProjectsDetails[], title: string) => projects?.find(project => title === project.title);
-
-const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-    : process.env.BASE_API_URL;
-
 export default async function ProjectsDetails({ params: { title } }: Props) {
-    const jobsAndProjectsData = await fetch(`${BASE_URL}/jobs-and-projects`);
-    const jobsAndProjects = await jobsAndProjectsData.json() as unknown as JobsAndProjects;
-    const decodedParams = decodeURI(title);
-    const project = getProjectByTitle(jobsAndProjects.projects, decodedParams);
+    const jobsAndProjects = await getJobsAndProjectsData();
+    const projectTitle = decodeURI(title);
 
-    return (
-        <section>
-            <HeadingImageArticle image={project?.images[0]} />
-            <ThreeSectionDescriptionArticle {...project} />
-            <ImageArticle image={project?.images[1]} />
-            <DescriptionArticle description={project?.description} />
-            <NextProjectArticle currentProject={project?.title} projects={jobsAndProjects.projects} />
-        </section>
-    )
+    if (jobsAndProjects?.projects) {
+        const project = jobsAndProjects.projects.find(project => projectTitle === project.title); 
+        return (
+            <section>
+                <HeadingImageArticle image={project?.images[0]} />
+                <ThreeSectionDescriptionArticle {...project} />
+                <ImageArticle image={project?.images[1]} />
+                <DescriptionArticle description={project?.description} />
+                <NextProjectArticle currentProject={project?.title} projects={jobsAndProjects.projects} />
+            </section>
+        )
+    }
+
+    return null
 }
 
 export async function generateStaticParams() {
-    const jobsAndProjectsResponse = await fetch(`${BASE_URL}/jobs-and-projects`);
-    const jobsAndProjectsData = await jobsAndProjectsResponse.json() as unknown as JobsAndProjects;
+    const jobsAndProjectsData = await getJobsAndProjectsData();
     return jobsAndProjectsData?.projects ? jobsAndProjectsData.projects?.map(project => project.title) : [];
 }

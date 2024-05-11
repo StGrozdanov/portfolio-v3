@@ -1,13 +1,10 @@
-import { SocialMedia } from '@/app/api/get-socials/route';
 import styles from './Footer.module.scss';
 import Animate from '../Animate/Animate';
 import Script from 'next/script';
-import { BASE_API_URL } from '@/utils/getBaseAPIUrl';
+import { getSocialsData } from '@/database/queries';
 
 export default async function Footer() {
-    let socials: SocialMedia | null = null;
-    const response = await fetch(`${BASE_API_URL}/get-socials`);
-    if (response.ok) socials = await response.json();
+    const socials = await getSocialsData();
     return (
         <>
             <footer data-testid="site-footer" className={styles["site-footer"]}>
@@ -20,7 +17,7 @@ export default async function Footer() {
                         </li>
                         <li data-testid="linkedIn" className={styles['linkedIn']}>
                             <Animate animationName='fadeInUp' delay={200}>
-                                <a href={socials?.linkedIn} target="blank"><i className="fa fa-linkedin" /></a>
+                                <a href={socials?.linkedin} target="blank"><i className="fa fa-linkedin" /></a>
                             </Animate>
                         </li>
                         <li data-testid="github" className={styles['github']}>

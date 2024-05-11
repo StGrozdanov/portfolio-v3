@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Images } from '@/app/api/jobs-and-projects/route';
+import { Images } from '@/interfaces/interfaces';
 
 interface JobsAndProjectsCardProps {
     image: Images,

@@ -1,7 +1,5 @@
-'use client'
-
+import { CarouselProps } from "@/interfaces/interfaces";
 import { useCallback, useEffect, useState } from "react";
-import { CarouselProps } from "../../../../interfaces/component-props-interfaces";
 
 export interface CarouselImageData {
     linkTitle: string,

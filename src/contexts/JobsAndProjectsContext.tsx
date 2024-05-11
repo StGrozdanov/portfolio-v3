@@ -2,7 +2,6 @@
 
 import { createContext, useEffect, useState } from "react";
 import { ContainerProps } from "./types";
-import { JobDetails, JobsAndProjects, ProjectsDetails } from "@/app/api/jobs-and-projects/route";
 
 export interface JobsAndProjectsContextType {
     getJobByCompanyName: (companyName: string) => JobDetails | undefined,

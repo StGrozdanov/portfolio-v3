@@ -9,7 +9,6 @@ type CvLink = { link: string | undefined };
 
 export default function Resume({ link }: CvLink) {
     const { isExpanded } = useBurgerContext();
-
     return (
         <a
             target="_blank"

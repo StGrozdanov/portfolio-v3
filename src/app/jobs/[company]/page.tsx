@@ -1,9 +1,9 @@
-import { JobDetails, JobsAndProjects } from "@/app/api/jobs-and-projects/route";
 import DescriptionArticle from "@/components/Jobs/DescriptionArticle/DescriptionArticle";
 import HeadingImageArticle from "@/components/Jobs/HeadingImageArticle/HeadingImageArticle";
 import ImageArticle from "@/components/Jobs/ImageArticle/ImageArticle";
 import NextJobArticle from "@/components/Jobs/NextJobArticle/NextJobArticle";
 import ThreeSectionDescriptionArticle from "@/components/Jobs/ThreeSectionDescriptionArticle/ThreeSectionDescriptionArticle";
+import { getJobsAndProjectsData } from "@/database/queries";
 
 type Props = {
     params: {
@@ -11,33 +11,28 @@ type Props = {
     }
 }
 
-export const revalidate = 900;
-
-const getJobByCompanyName = (jobs: JobDetails[], companyName: string) => jobs?.find(job => companyName === job.company);
-
-const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-    : process.env.BASE_API_URL;
-
 export default async function JobsDetails({ params: { company } }: Props) {
-    const jobsAndProjectsData = await fetch(`${BASE_URL}/jobs-and-projects`);
-    const jobsAndProjects = await jobsAndProjectsData.json() as unknown as JobsAndProjects;
-    const decodedParams = decodeURI(company);
-    const job = getJobByCompanyName(jobsAndProjects.jobs, decodedParams);
+    const jobsAndProjectsData = await getJobsAndProjectsData();
+    const companyName = decodeURI(company);
 
-    return (
-        <section>
-            <HeadingImageArticle image={job?.images[0]} />
-            <ThreeSectionDescriptionArticle {...job} />
-            <ImageArticle image={job?.images[1]} />
-            <DescriptionArticle achievements={job?.achievements} />
-            <NextJobArticle jobs={jobsAndProjects.jobs} currentJob={job?.company} />
-        </section>
-    )
+    if (jobsAndProjectsData?.jobs) {
+        const job = jobsAndProjectsData.jobs.find(job => companyName === job.company);
+
+        return (
+            <section>
+                <HeadingImageArticle image={job?.images[0]} />
+                <ThreeSectionDescriptionArticle {...job} />
+                <ImageArticle image={job?.images[1]} />
+                <DescriptionArticle achievements={job?.achievements} />
+                <NextJobArticle jobs={jobsAndProjectsData.jobs} currentJob={job?.company} />
+            </section>
+        )
+    }
+
+    return null;
 }
 
 export async function generateStaticParams() {
-    const jobsAndProjectsResponse = await fetch(`${BASE_URL}/jobs-and-projects`);
-    const jobsAndProjectsData = await jobsAndProjectsResponse.json() as unknown as JobsAndProjects;
+    const jobsAndProjectsData = await getJobsAndProjectsData();
     return jobsAndProjectsData?.jobs ? jobsAndProjectsData.jobs.map(job => job.company) : [];
 }

@@ -1,5 +1,4 @@
 'use client'
-/* eslint-disable */
 
 import styles from './Contact.module.scss';
 import ThankYouMessage from './modules/components/ThankYouMessage';
@@ -15,7 +14,7 @@ export default function Contact() {
         <section id='contacts' className={styles['contact-section']}>
             <header className={styles["contact-section-header"]}>
                 <h2><span style={{ color: "orange" }}>Contact</span> Me</h2>
-                <p>Don't hesitate to contact me!</p>
+                <p>Don&apos;t hesitate to contact me!</p>
             </header>
             <main>
                 <form ref={form} onSubmit={sendEmailHandler}>

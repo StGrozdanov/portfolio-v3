@@ -1,4 +1,4 @@
-import { Partner } from '@/app/api/basic-user-info/route';
+import { Partner } from '@/interfaces/interfaces';
 import styles from './Partners.module.scss';
 import Image from 'next/image';
 

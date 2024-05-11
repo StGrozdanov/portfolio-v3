@@ -15,6 +15,8 @@
         max-width: 100%;
         position: static;
         margin-top: 100px;
+        display: flex;
+        flex-direction: column;
     }
 
     @include maxWidthMediaQuery(425px) {
@@ -74,7 +76,8 @@
 
         @include maxWidthMediaQuery(1024px) {
             transform: scale(1);
-            width: 50%;
+            width: 100%;
+            margin-top: 0.5rem;
         }
     }
 

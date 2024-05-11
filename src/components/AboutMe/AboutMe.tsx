@@ -1,15 +1,10 @@
-import { AboutMeResponse } from '@/app/api/about-me/route';
 import styles from './AboutMe.module.scss';
 import Article from './modules/Article';
-import { BASE_API_URL } from '@/utils/getBaseAPIUrl';
 import Animate from '../Animate/Animate';
-
-export const revalidate = 900;
+import { getAboutMeData } from '@/database/queries';
 
 export default async function AboutMe() {
-    let aboutMe: AboutMeResponse | null = null;
-    const response = await fetch(`${BASE_API_URL}/about-me`);
-    if (response.ok) aboutMe = await response.json();
+    const aboutMe = await getAboutMeData();
 
     return (
         <section id='about' className={styles.container}>
